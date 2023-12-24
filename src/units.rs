@@ -1,6 +1,7 @@
 use crate::{units, Unit, UnitMatrix};
 
 units! {
+    // Length
     [1, 0, 0, 0, 0, 0, 0] {
         10e+30 => Quettameter
         10e+27 => Ronnameter
@@ -27,10 +28,12 @@ units! {
         10e-24 => Yoctometer
         10e-27 => Rontometer
         10e-30 => Quectometer
+        1.6e-35 => Planck
         0.9144 => Yard
         0.0254 => Inch
         10e-10 => Angstrom
     }
+    // Time
     [0, 1, 0, 0, 0, 0, 0] {
         10e+30 => Quettasecond
         10e+27 => Ronnasecond
@@ -83,5 +86,38 @@ units! {
         10e-03 => Jiffy
         10e-08 => Shake
         5.39e-44 => PlanckTime
+    }
+    // Mass
+    [0, 0, 1, 0, 0, 0, 0] {
+
+        10e+30 => Quettagram
+        10e+27 => Ronnagram
+        10e+24 => Yottagram
+        10e+21 => Zettagram
+        10e+18 => Exagram
+        10e+15 => Petagram
+        10e+12 => Tetragram
+        10e+09 => Gigagram
+        10e+06 => Megagram
+        10e+03 => Kilogram
+        10e+02 => Hectogram
+        10e+01 => Decagram
+        1.0 => Gram
+        10e-01 => Decigram
+        10e-02 => Centigram
+        10e-03 => Milligram
+        10e-06 => Microgram
+        10e-09 => Nanogram
+        10e-12 => Picogram
+        10e-15 => Femtogram
+        10e-18 => Attogram
+        10e-21 => Zeptogram
+        10e-24 => Yoctogram
+        10e-27 => Rontogram
+        10e-30 => Quectogram
+    }
+    // Force
+    [1, -2, 1, 0, 0, 0, 0] {
+        1000.0 => Newton
     }
 }
