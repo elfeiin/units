@@ -89,39 +89,42 @@ units! {
     }
     // Mass
     [0, 0, 1, 0, 0, 0, 0] {
-
-        10e+30 => Quettagram
-        10e+27 => Ronnagram
-        10e+24 => Yottagram
-        10e+21 => Zettagram
-        10e+18 => Exagram
-        10e+15 => Petagram
-        10e+12 => Tetragram
-        10e+09 => Gigagram
-        10e+06 => Megagram
-        10e+03 => Kilogram
-        10e+02 => Hectogram
-        10e+01 => Decagram
-        1.0 => Gram
-        10e-01 => Decigram
-        10e-02 => Centigram
-        10e-03 => Milligram
-        10e-06 => Microgram
-        10e-09 => Nanogram
-        10e-12 => Picogram
-        10e-15 => Femtogram
-        10e-18 => Attogram
-        10e-21 => Zeptogram
-        10e-24 => Yoctogram
-        10e-27 => Rontogram
-        10e-30 => Quectogram
+        10e+27 => Quettagram
+        10e+24 => Ronnagram
+        10e+21 => Yottagram
+        10e+18 => Zettagram
+        10e+15 => Exagram
+        10e+12 => Petagram
+        10e+09 => Tetragram
+        10e+06 => Gigagram
+        10e+03 => Megagram
+        1.0    => Kilogram
+        10e-01 => Hectogram
+        10e-02 => Decagram
+        10e-03 => Gram
+        10e-04 => Decigram
+        10e-05 => Centigram
+        10e-06 => Milligram
+        10e-09 => Microgram
+        10e-12 => Nanogram
+        10e-15 => Picogram
+        10e-18 => Femtogram
+        10e-21 => Attogram
+        10e-24 => Zeptogram
+        10e-27 => Yoctogra
+        10e-30 => Rontogra
+        10e-33 => Quectogra
+        1000.0 => MetricTon
+        1016.047 => UsTon
     }
     // Temperature
     [0, 0, 0, 1, 0, 0, 0] {
-        5.0 / 9.0, 32.0 => Fahrenheit
+        5.0 / 9.0, 459.67 => Fahrenheit
+        1.0 => Kelvin
+        1.0, 273.15 => Celsius
     }
     // Force
     [1, -2, 1, 0, 0, 0, 0] {
-        1000.0 => Newton
+        1.0 => Newton
     }
 }
