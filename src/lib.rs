@@ -5,13 +5,13 @@ use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Eq, PartialEq, Copy, Clone)]
 pub struct UnitMatrix {
-    length: i8,
-    time: i8,
-    mass: i8,
-    current: i8,
-    thermal: i8,
-    amount: i8,
-    candela: i8,
+    pub length: i8,
+    pub time: i8,
+    pub mass: i8,
+    pub current: i8,
+    pub thermal: i8,
+    pub amount: i8,
+    pub candela: i8,
 }
 
 impl Add for UnitMatrix {
