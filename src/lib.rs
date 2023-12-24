@@ -49,6 +49,24 @@ pub trait Unit {
     fn matrix(&self) -> UnitMatrix;
 }
 
+impl Unit for (f64, UnitMatrix) {
+    fn scale(&self) -> f64 {
+        self.0
+    }
+    fn matrix(&self) -> UnitMatrix {
+        self.1
+    }
+}
+
+impl Unit for (UnitMatrix, f64) {
+    fn scale(&self) -> f64 {
+        self.1
+    }
+    fn matrix(&self) -> UnitMatrix {
+        self.0
+    }
+}
+
 #[derive(PartialEq, Clone)]
 pub struct Measurement {
     units: UnitMatrix,
