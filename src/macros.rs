@@ -19,8 +19,8 @@ macro_rules! units {
             fn from_base(&self, v: f64) -> f64 {
                 (v $(- $o)?) / $f
             }
-            fn matrix(&self) -> UnitMatrix {
-                UnitMatrix::from($m)
+            fn matrix(&self) -> Units {
+                Units::from($m)
             }
         }
     };
@@ -37,7 +37,7 @@ macro_rules! units {
                 (v / $f) $(- $o)?
             }
             fn matrix(&self) -> UnitMatrix {
-                UnitMatrix::from($m)
+                Units::from($m)
             }
         }
     };

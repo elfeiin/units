@@ -4,17 +4,17 @@ pub mod units;
 use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Eq, PartialEq, Copy, Clone, Default)]
-pub struct UnitMatrix {
+pub struct Units {
     pub length: i8,
     pub time: i8,
     pub mass: i8,
     pub current: i8,
-    pub thermal: i8,
+    pub temperature: i8,
     pub amount: i8,
     pub candela: i8,
 }
 
-impl From<&[i8]> for UnitMatrix {
+impl From<&[i8]> for Units {
     fn from(value: &[i8]) -> Self {
         let mut output = Self::default();
         for (i, v) in value.iter().enumerate() {
@@ -23,7 +23,7 @@ impl From<&[i8]> for UnitMatrix {
                 1 => output.time = *v,
                 2 => output.mass = *v,
                 3 => output.current = *v,
-                4 => output.thermal = *v,
+                4 => output.temperature = *v,
                 5 => output.amount = *v,
                 6 => output.candela = *v,
                 _ => unimplemented![],
@@ -33,21 +33,21 @@ impl From<&[i8]> for UnitMatrix {
     }
 }
 
-impl From<[i8; 7]> for UnitMatrix {
+impl From<[i8; 7]> for Units {
     fn from(value: [i8; 7]) -> Self {
         Self {
             length: value[0],
             time: value[1],
             mass: value[2],
             current: value[3],
-            thermal: value[4],
+            temperature: value[4],
             amount: value[5],
             candela: value[6],
         }
     }
 }
 
-impl Add for UnitMatrix {
+impl Add for Units {
     type Output = Self;
     fn add(self, rhs: Self) -> Self {
         Self {
@@ -55,14 +55,14 @@ impl Add for UnitMatrix {
             time: self.time + rhs.time,
             mass: self.mass + rhs.mass,
             current: self.current + rhs.current,
-            thermal: self.thermal + rhs.thermal,
+            temperature: self.temperature + rhs.temperature,
             amount: self.amount + rhs.amount,
             candela: self.candela + rhs.candela,
         }
     }
 }
 
-impl Sub for UnitMatrix {
+impl Sub for Units {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self {
         Self {
@@ -70,22 +70,119 @@ impl Sub for UnitMatrix {
             time: self.time - rhs.time,
             mass: self.mass - rhs.mass,
             current: self.current - rhs.current,
-            thermal: self.thermal - rhs.thermal,
+            temperature: self.temperature - rhs.temperature,
             amount: self.amount - rhs.amount,
             candela: self.candela - rhs.candela,
         }
     }
 }
 
+impl Mul<i8> for Units {
+    type Output = Self;
+    fn mul(self, rhs: i8) -> Self {
+        Self {
+            length: self.length * rhs,
+            time: self.time * rhs,
+            mass: self.mass * rhs,
+            current: self.current * rhs,
+            temperature: self.temperature * rhs,
+            amount: self.amount * rhs,
+            candela: self.candela * rhs,
+        }
+    }
+}
+
+impl Div<i8> for Units {
+    type Output = Self;
+    fn div(self, rhs: i8) -> Self {
+        Self {
+            length: self.length / rhs,
+            time: self.time / rhs,
+            mass: self.mass / rhs,
+            current: self.current / rhs,
+            temperature: self.temperature / rhs,
+            amount: self.amount / rhs,
+            candela: self.candela / rhs,
+        }
+    }
+}
+
+#[allow(non_upper_case_globals)]
+impl Units {
+    pub const Length: Self = Self {
+        length: 1,
+        time: 0,
+        mass: 0,
+        current: 0,
+        temperature: 0,
+        amount: 0,
+        candela: 0,
+    };
+    pub const Time: Self = Self {
+        length: 0,
+        time: 1,
+        mass: 0,
+        current: 0,
+        temperature: 0,
+        amount: 0,
+        candela: 0,
+    };
+    pub const Mass: Self = Self {
+        length: 0,
+        time: 0,
+        mass: 1,
+        current: 0,
+        temperature: 0,
+        amount: 0,
+        candela: 0,
+    };
+    pub const Current: Self = Self {
+        length: 0,
+        time: 0,
+        mass: 0,
+        current: 1,
+        temperature: 0,
+        amount: 0,
+        candela: 0,
+    };
+    pub const Temperature: Self = Self {
+        length: 0,
+        time: 0,
+        mass: 0,
+        current: 0,
+        temperature: 1,
+        amount: 0,
+        candela: 0,
+    };
+    pub const Amount: Self = Self {
+        length: 0,
+        time: 0,
+        mass: 0,
+        current: 0,
+        temperature: 0,
+        amount: 1,
+        candela: 0,
+    };
+    pub const Candela: Self = Self {
+        length: 0,
+        time: 0,
+        mass: 0,
+        current: 0,
+        temperature: 0,
+        amount: 0,
+        candela: 1,
+    };
+}
+
 pub trait Unit {
     fn to_base(&self, v: f64) -> f64;
     fn from_base(&self, v: f64) -> f64;
-    fn matrix(&self) -> UnitMatrix;
+    fn matrix(&self) -> Units;
 }
 
 #[derive(PartialEq, Clone)]
 pub struct Measurement {
-    matrix: UnitMatrix,
+    matrix: Units,
     value: f64,
 }
 
@@ -142,10 +239,10 @@ impl Sub for Measurement {
 }
 
 impl Measurement {
-    pub fn with_unit_matrix(value: f64, matrix: UnitMatrix) -> Self {
+    pub fn with_unit_matrix(value: f64, matrix: Units) -> Self {
         Self { matrix, value }
     }
-    pub fn from_unit_matrix(&self, matrix: UnitMatrix) -> Option<f64> {
+    pub fn from_unit_matrix(&self, matrix: Units) -> Option<f64> {
         if self.matrix == matrix {
             Some(self.value)
         } else {
@@ -165,7 +262,7 @@ impl Measurement {
             None
         }
     }
-    pub fn matrix(&self) -> UnitMatrix {
+    pub fn matrix(&self) -> Units {
         self.matrix
     }
     pub fn value(&self) -> f64 {
