@@ -3,7 +3,7 @@ pub mod units;
 
 use std::ops::{Add, Div, Mul, Sub};
 
-#[derive(Eq, PartialEq, Copy, Clone)]
+#[derive(Eq, PartialEq, Copy, Clone, Default)]
 pub struct UnitMatrix {
     pub length: i8,
     pub time: i8,
@@ -12,6 +12,39 @@ pub struct UnitMatrix {
     pub thermal: i8,
     pub amount: i8,
     pub candela: i8,
+}
+
+impl From<&[i8]> for UnitMatrix {
+    fn from(value: &[i8]) -> Self {
+        let mut output = Self::default();
+        for (i, v) in value.iter().enumerate() {
+            match i {
+                0 => output.length = *v,
+                1 => output.time = *v,
+                2 => output.mass = *v,
+                3 => output.current = *v,
+                4 => output.thermal = *v,
+                5 => output.amount = *v,
+                6 => output.candela = *v,
+                _ => unimplemented![],
+            }
+        }
+        output
+    }
+}
+
+impl From<[i8; 7]> for UnitMatrix {
+    fn from(value: [i8; 7]) -> Self {
+        Self {
+            length: value[0],
+            time: value[1],
+            mass: value[2],
+            current: value[3],
+            thermal: value[4],
+            amount: value[5],
+            candela: value[6],
+        }
+    }
 }
 
 impl Add for UnitMatrix {

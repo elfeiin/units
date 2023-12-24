@@ -2,7 +2,7 @@ use crate::{units, Unit, UnitMatrix};
 
 units! {
     // Length
-    [1, 0, 0, 0, 0, 0, 0] {
+    [1, 0, 0, 0, 0, 0, 0]; {
         10e+30 => Quettameter
         10e+27 => Ronnameter
         10e+24 => Yottameter
@@ -34,7 +34,7 @@ units! {
         10e-10 => Angstrom
     }
     // Time
-    [0, 1, 0, 0, 0, 0, 0] {
+    [0, 1, 0, 0, 0, 0, 0]; {
         10e+30 => Quettasecond
         10e+27 => Ronnasecond
         10e+24 => Yottasecond
@@ -88,7 +88,7 @@ units! {
         5.39e-44 => PlanckTime
     }
     // Mass
-    [0, 0, 1, 0, 0, 0, 0] {
+    [0, 0, 1, 0, 0, 0, 0]; {
         10e+27 => Quettagram
         10e+24 => Ronnagram
         10e+21 => Yottagram
@@ -118,13 +118,74 @@ units! {
         1016.047 => UsTon
     }
     // Temperature
-    [0, 0, 0, 1, 0, 0, 0] {
-        5.0 / 9.0, 459.67 => Fahrenheit
+    [0, 0, 0, 0, 1, 0, 0]; {
+        5.0 / 9.0, (459.67) => Fahrenheit
         1.0 => Kelvin
         1.0, 273.15 => Celsius
     }
+    // Current
+    [0, 0, 0, 1, 0, 0, 0]; {
+        1.0 => Amp
+    }
+    // Frequency
+    [0, -1, 0, 0, 0, 0, 0]; {
+        1.0 => Hertz
+    }
     // Force
-    [1, -2, 1, 0, 0, 0, 0] {
+    [1, -2, 1, 0, 0, 0, 0]; {
         1.0 => Newton
+    }
+    // Pressure
+    [1, -2, -1, 0, 0, 0, 0]; {
+        1.0 => Pascal
+    }
+    // Energy
+    [2, -2, 1, 0, 0, 0, 0]; {
+        1.0 => Joule
+    }
+    // Power
+    [2, -3, 1, 0, 0, 0, 0]; {
+        1.0 => Watt
+    }
+    // Charge
+    [0, 1, 0, 1, 0, 0, 0]; {
+        1.0 => Coulomb
+    }
+    // Electric Potential
+    [-2, -3, 1, -1, 0, 0, 0]; {
+        1.0 => Volt
+    }
+    // Capacitance
+    [-2, 4, -1, 2, 0, 0, 0]; {
+        1.0 => Farad
+    }
+    // Resistance
+    [2, -3, 1, -2, 0, 0, 0]; {
+        1.0 => Ohm
+    }
+    // Electrical Conductance
+    [-2, 3, -1, 2, 0, 0, 0]; {
+        1.0 => Siemens
+    }
+    // Magnetic Flux
+    [2, -2, 1, -1, 0, 0, 0]; {
+        1.0 => Weber
+    }
+    // Magnetic Flux Density
+    [0, -2, 1, -1, 0, 0, 0]; {
+        1.0 => Tesla
+    }
+    // Inductance
+    [2, -2, 1, -2, 0, 0, 0]; {
+        1.0 => Henry
+    }
+    // Catalytic Activity
+    [0, -1, 0, 0, 0, 1, 0]; {
+        1.0 => Katal
+    }
+    // Speed
+    [1, -1, 0, 0, 0, 0, 0]; {
+        1.0 => MetersPerSecond
+        1.0 / 3.6 => KMPH
     }
 }
