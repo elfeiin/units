@@ -11,18 +11,17 @@ macro_rules! units {
         #[derive(Copy, Clone)]
         pub struct $nym;
 
-        $(
+        impl Unit for $nym {
+            const SCALE: f64 = $f;
+            $(
             fn to_base(&self, v: f64) -> f64 {
                 v * Self::SCALE + $o
             }
 
-            fn to_base(&self, v: f64) -> f64 {
+            fn from_base(&self, v: f64) -> f64 {
                 (v - $o) / Self::SCALE
             }
-        )?
-
-        impl Unit for $nym {
-            const SCALE: f64 = $f;
+            )?
             fn matrix(&self) -> UnitMatrix {
                 UnitMatrix {
                     length: $l,

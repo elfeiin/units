@@ -116,6 +116,10 @@ units! {
         10e-27 => Rontogram
         10e-30 => Quectogram
     }
+    // Temperature
+    [0, 0, 0, 1, 0, 0, 0] {
+        5.0 / 9.0, 32.0 => Fahrenheit
+    }
     // Force
     [1, -2, 1, 0, 0, 0, 0] {
         1000.0 => Newton
