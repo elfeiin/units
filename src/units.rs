@@ -186,7 +186,8 @@ units! {
     // Speed
     Units::Length + Units::Time * -1; {
         1.0 => MetersPerSecond
-        1.0 / 3.6 => KMPH
+        1.0 / 3.6 => Kmph
+        1.0 / 2.237 => Mph
     }
     // Acceleration
     Units::Length + Units::Time * -2; {

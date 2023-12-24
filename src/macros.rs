@@ -8,7 +8,7 @@ macro_rules! units {
         units! { $( $rest )* }
     };
     (@inner $m:expr; $f:expr $(, $o:expr)? => $nym:ident) => {
-        #[derive(Copy, Clone)]
+        #[derive(Default, Clone, Copy)]
         pub struct $nym;
 
         impl Unit for $nym {
@@ -25,7 +25,7 @@ macro_rules! units {
         }
     };
     (@inner $m:expr; $f:expr $(, ($o:expr))? => $nym:ident) => {
-        #[derive(Copy, Clone)]
+        #[derive(Default, Clone, Copy)]
         pub struct $nym;
 
         impl Unit for $nym {

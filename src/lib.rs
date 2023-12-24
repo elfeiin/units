@@ -109,6 +109,15 @@ impl Div<i8> for Units {
 
 #[allow(non_upper_case_globals)]
 impl Units {
+    pub const Scalar: Self = Self {
+        length: 0,
+        time: 0,
+        mass: 0,
+        current: 0,
+        temperature: 0,
+        amount: 0,
+        candela: 0,
+    };
     pub const Length: Self = Self {
         length: 1,
         time: 0,
@@ -178,6 +187,12 @@ pub trait Unit {
     fn to_base(&self, v: f64) -> f64;
     fn from_base(&self, v: f64) -> f64;
     fn matrix(&self) -> Units;
+    fn new(v: f64) -> Measurement
+    where
+        Self: Default,
+    {
+        Measurement::from_unit(Self::default(), v)
+    }
 }
 
 #[derive(PartialEq, Clone)]
