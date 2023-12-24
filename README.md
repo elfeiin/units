@@ -29,5 +29,5 @@ let freq = Hertz::new(60.0);
 // Number of cycles / freq
 let time = Measurement::from_unit(Units::Scalar, 60.0) / freq;
 
-assert_eq![time, Some(1.0)];
+assert_eq![time.to_unit(Second), Some(1.0)];
 ```
