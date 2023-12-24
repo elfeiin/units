@@ -45,13 +45,8 @@ impl Sub for UnitMatrix {
 }
 
 pub trait Unit {
-    const SCALE: f64;
-    fn to_base(&self, v: f64) -> f64 {
-        v * Self::SCALE
-    }
-    fn from_base(&self, v: f64) -> f64 {
-        v / Self::SCALE
-    }
+    fn to_base(&self, v: f64) -> f64;
+    fn from_base(&self, v: f64) -> f64;
     fn matrix(&self) -> UnitMatrix;
 }
 

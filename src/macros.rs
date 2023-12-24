@@ -12,16 +12,13 @@ macro_rules! units {
         pub struct $nym;
 
         impl Unit for $nym {
-            const SCALE: f64 = $f;
-            $(
             fn to_base(&self, v: f64) -> f64 {
-                v * Self::SCALE + $o
+                v * $f $(+ $o)?
             }
 
             fn from_base(&self, v: f64) -> f64 {
-                (v - $o) / Self::SCALE
+                (v $(- $o)?) / $f
             }
-            )?
             fn matrix(&self) -> UnitMatrix {
                 UnitMatrix {
                     length: $l,
