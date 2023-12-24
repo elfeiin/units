@@ -45,31 +45,19 @@ impl Sub for UnitMatrix {
 }
 
 pub trait Unit {
-    fn scale(&self) -> f64;
+    const SCALE: f64;
+    fn to_base(&self, v: f64) -> f64 {
+        v * Self::SCALE
+    }
+    fn from_base(&self, v: f64) -> f64 {
+        v / Self::SCALE
+    }
     fn matrix(&self) -> UnitMatrix;
-}
-
-impl Unit for (f64, UnitMatrix) {
-    fn scale(&self) -> f64 {
-        self.0
-    }
-    fn matrix(&self) -> UnitMatrix {
-        self.1
-    }
-}
-
-impl Unit for (UnitMatrix, f64) {
-    fn scale(&self) -> f64 {
-        self.1
-    }
-    fn matrix(&self) -> UnitMatrix {
-        self.0
-    }
 }
 
 #[derive(PartialEq, Clone)]
 pub struct Measurement {
-    units: UnitMatrix,
+    matrix: UnitMatrix,
     value: f64,
 }
 
@@ -78,7 +66,7 @@ impl Mul for Measurement {
 
     fn mul(self, rhs: Self) -> Self::Output {
         Self {
-            units: self.units + rhs.units,
+            matrix: self.matrix + rhs.matrix,
             value: self.value * rhs.value,
         }
     }
@@ -89,7 +77,7 @@ impl Div for Measurement {
 
     fn div(self, rhs: Self) -> Self::Output {
         Self {
-            units: self.units - rhs.units,
+            matrix: self.matrix - rhs.matrix,
             value: self.value / rhs.value,
         }
     }
@@ -99,7 +87,7 @@ impl Add for Measurement {
     type Output = Option<Self>;
 
     fn add(self, rhs: Self) -> Self::Output {
-        if self.units == rhs.units {
+        if self.matrix == rhs.matrix {
             Some(Self {
                 value: self.value + rhs.value,
                 ..self
@@ -114,7 +102,7 @@ impl Sub for Measurement {
     type Output = Option<Self>;
 
     fn sub(self, rhs: Self) -> Self::Output {
-        if self.units == rhs.units {
+        if self.matrix == rhs.matrix {
             Some(Self {
                 value: self.value - rhs.value,
                 ..self
@@ -126,17 +114,33 @@ impl Sub for Measurement {
 }
 
 impl Measurement {
-    pub fn from_unit(unit: impl Unit, v: f64) -> Self {
-        Self {
-            units: unit.matrix(),
-            value: v * unit.scale(),
-        }
+    pub fn with_unit_matrix(value: f64, matrix: UnitMatrix) -> Self {
+        Self { matrix, value }
     }
-    pub fn to_unit(&self, unit: impl Unit) -> Option<f64> {
-        if self.units == unit.matrix() {
-            Some(self.value / unit.scale())
+    pub fn from_unit_matrix(&self, matrix: UnitMatrix) -> Option<f64> {
+        if self.matrix == matrix {
+            Some(self.value)
         } else {
             None
         }
+    }
+    pub fn from_unit(unit: impl Unit, v: f64) -> Self {
+        Self {
+            matrix: unit.matrix(),
+            value: unit.to_base(v),
+        }
+    }
+    pub fn to_unit(&self, unit: impl Unit) -> Option<f64> {
+        if self.matrix == unit.matrix() {
+            Some(unit.from_base(self.value))
+        } else {
+            None
+        }
+    }
+    pub fn matrix(&self) -> UnitMatrix {
+        self.matrix
+    }
+    pub fn value(&self) -> f64 {
+        self.value
     }
 }
