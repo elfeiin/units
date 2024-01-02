@@ -4,7 +4,7 @@ pub mod units;
 use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Eq, PartialEq, Copy, Clone, Default)]
-pub struct Units {
+pub struct UnitMatrix {
     pub length: i8,
     pub time: i8,
     pub mass: i8,
@@ -14,7 +14,7 @@ pub struct Units {
     pub candela: i8,
 }
 
-impl From<&[i8]> for Units {
+impl From<&[i8]> for UnitMatrix {
     fn from(value: &[i8]) -> Self {
         let mut output = Self::default();
         for (i, v) in value.iter().enumerate() {
@@ -33,7 +33,7 @@ impl From<&[i8]> for Units {
     }
 }
 
-impl From<[i8; 7]> for Units {
+impl From<[i8; 7]> for UnitMatrix {
     fn from(value: [i8; 7]) -> Self {
         Self {
             length: value[0],
@@ -47,7 +47,7 @@ impl From<[i8; 7]> for Units {
     }
 }
 
-impl Add for Units {
+impl Add for UnitMatrix {
     type Output = Self;
     fn add(self, rhs: Self) -> Self {
         Self {
@@ -62,7 +62,7 @@ impl Add for Units {
     }
 }
 
-impl Sub for Units {
+impl Sub for UnitMatrix {
     type Output = Self;
     fn sub(self, rhs: Self) -> Self {
         Self {
@@ -77,7 +77,7 @@ impl Sub for Units {
     }
 }
 
-impl Mul<i8> for Units {
+impl Mul<i8> for UnitMatrix {
     type Output = Self;
     fn mul(self, rhs: i8) -> Self {
         Self {
@@ -92,7 +92,7 @@ impl Mul<i8> for Units {
     }
 }
 
-impl Div<i8> for Units {
+impl Div<i8> for UnitMatrix {
     type Output = Self;
     fn div(self, rhs: i8) -> Self {
         Self {
@@ -108,7 +108,7 @@ impl Div<i8> for Units {
 }
 
 #[allow(non_upper_case_globals)]
-impl Units {
+impl UnitMatrix {
     pub const Scalar: Self = Self {
         length: 0,
         time: 0,
@@ -186,7 +186,7 @@ impl Units {
 pub trait Unit {
     fn to_base(&self, v: f64) -> f64;
     fn from_base(&self, v: f64) -> f64;
-    fn matrix(&self) -> Units;
+    fn matrix(&self) -> UnitMatrix;
     fn new(v: f64) -> Measurement
     where
         Self: Default,
@@ -195,10 +195,32 @@ pub trait Unit {
     }
 }
 
-#[derive(PartialEq, Clone)]
+#[derive(PartialEq, Clone, Copy)]
 pub struct Measurement {
-    matrix: Units,
+    matrix: UnitMatrix,
     value: f64,
+}
+
+impl Mul<f64> for Measurement {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self::Output {
+        Self {
+            value: self.value * rhs,
+            ..self
+        }
+    }
+}
+
+impl Div<f64> for Measurement {
+    type Output = Self;
+
+    fn div(self, rhs: f64) -> Self::Output {
+        Self {
+            value: self.value / rhs,
+            ..self
+        }
+    }
 }
 
 impl Mul for Measurement {
@@ -254,15 +276,8 @@ impl Sub for Measurement {
 }
 
 impl Measurement {
-    pub fn with_unit_matrix(value: f64, matrix: Units) -> Self {
+    pub fn with_unit_matrix(value: f64, matrix: UnitMatrix) -> Self {
         Self { matrix, value }
-    }
-    pub fn from_unit_matrix(&self, matrix: Units) -> Option<f64> {
-        if self.matrix == matrix {
-            Some(self.value)
-        } else {
-            None
-        }
     }
     pub fn from_unit(unit: impl Unit, v: f64) -> Self {
         Self {
@@ -270,14 +285,14 @@ impl Measurement {
             value: unit.to_base(v),
         }
     }
-    pub fn to_unit(&self, unit: impl Unit) -> Option<f64> {
+    pub fn convert_to(&self, unit: impl Unit) -> Option<f64> {
         if self.matrix == unit.matrix() {
             Some(unit.from_base(self.value))
         } else {
             None
         }
     }
-    pub fn matrix(&self) -> Units {
+    pub fn matrix(&self) -> UnitMatrix {
         self.matrix
     }
     pub fn value(&self) -> f64 {

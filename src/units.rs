@@ -1,8 +1,8 @@
-use crate::{units, Unit, Units};
+use crate::{units, Unit, UnitMatrix};
 
 units! {
     // Length
-    Units::Length; {
+    UnitMatrix::Length; {
         10e+30 => Quettameter
         10e+27 => Ronnameter
         10e+24 => Yottameter
@@ -34,7 +34,7 @@ units! {
         10e-10 => Angstrom
     }
     // Time
-    Units::Time; {
+    UnitMatrix::Time; {
         10e+30 => Quettasecond
         10e+27 => Ronnasecond
         10e+24 => Yottasecond
@@ -88,7 +88,7 @@ units! {
         5.39e-44 => PlanckTime
     }
     // Mass
-    Units::Mass; {
+    UnitMatrix::Mass; {
         10e+27 => Quettagram
         10e+24 => Ronnagram
         10e+21 => Yottagram
@@ -118,87 +118,87 @@ units! {
         1016.047 => UsTon
     }
     // Current
-    Units::Current; {
+    UnitMatrix::Current; {
         1.0 => Amp
     }
     // Temperature
-    Units::Temperature; {
+    UnitMatrix::Temperature; {
         5.0 / 9.0, (459.67) => Fahrenheit
         1.0 => Kelvin
         1.0, 273.15 => Celsius
     }
     // Frequency
-    Units::Time * -1; {
+    UnitMatrix::Time * -1; {
         1.0 => Hertz
     }
     // Force
-    Units::Length + Units::Time * -2 + Units::Mass; {
+    UnitMatrix::Length + UnitMatrix::Time * -2 + UnitMatrix::Mass; {
         1.0 => Newton
     }
     // Pressure
-    Units::Length + Units::Time * -2 + Units::Mass * -1; {
+    UnitMatrix::Length + UnitMatrix::Time * -2 + UnitMatrix::Mass * -1; {
         1.0 => Pascal
     }
     // Energy
-    Units::Length * 2 + Units::Time * -2 + Units::Mass; {
+    UnitMatrix::Length * 2 + UnitMatrix::Time * -2 + UnitMatrix::Mass; {
         1.0 => Joule
     }
     // Power
-    Units::Length * 2 + Units::Time * -3 + Units::Mass; {
+    UnitMatrix::Length * 2 + UnitMatrix::Time * -3 + UnitMatrix::Mass; {
         1.0 => Watt
     }
     // Charge
-    Units::Time + Units::Current; {
+    UnitMatrix::Time + UnitMatrix::Current; {
         1.0 => Coulomb
     }
     // Electric Potential
-    Units::Length * -2 + Units::Time * -3 + Units::Mass + Units::Current * -1; {
+    UnitMatrix::Length * -2 + UnitMatrix::Time * -3 + UnitMatrix::Mass + UnitMatrix::Current * -1; {
         1.0 => Volt
     }
     // Capacitance
-    Units::Length * -2 + Units::Time * 4 + Units::Mass * -1 + Units::Current; {
+    UnitMatrix::Length * -2 + UnitMatrix::Time * 4 + UnitMatrix::Mass * -1 + UnitMatrix::Current; {
         1.0 => Farad
     }
     // Resistance
-    Units::Length * 2 + Units::Time * -3 + Units::Mass + Units::Current * -2; {
+    UnitMatrix::Length * 2 + UnitMatrix::Time * -3 + UnitMatrix::Mass + UnitMatrix::Current * -2; {
         1.0 => Ohm
     }
     // Electrical Conductance
-    Units::Length * -2 + Units::Time * 3 + Units::Mass * -1 + Units::Current * 2; {
+    UnitMatrix::Length * -2 + UnitMatrix::Time * 3 + UnitMatrix::Mass * -1 + UnitMatrix::Current * 2; {
         1.0 => Siemens
     }
     // Magnetic Flux
-    Units::Length * 2 + Units::Time * -2 + Units::Mass + Units::Current * -1; {
+    UnitMatrix::Length * 2 + UnitMatrix::Time * -2 + UnitMatrix::Mass + UnitMatrix::Current * -1; {
         1.0 => Weber
     }
     // Magnetic Flux Density
-    Units::Time * 2 + Units::Mass + Units::Current * -1; {
+    UnitMatrix::Time * 2 + UnitMatrix::Mass + UnitMatrix::Current * -1; {
         1.0 => Tesla
     }
     // Inductance
-    Units::Length * 2 + Units::Time * -2 + Units::Mass + Units::Current * -2; {
+    UnitMatrix::Length * 2 + UnitMatrix::Time * -2 + UnitMatrix::Mass + UnitMatrix::Current * -2; {
         1.0 => Henry
     }
     // Catalytic Activity
-    Units::Time * -1 + Units::Amount; {
+    UnitMatrix::Time * -1 + UnitMatrix::Amount; {
         1.0 => Katal
     }
     // Speed
-    Units::Length + Units::Time * -1; {
+    UnitMatrix::Length + UnitMatrix::Time * -1; {
         1.0 => MetersPerSecond
         1.0 / 3.6 => Kmph
         1.0 / 2.237 => Mph
     }
     // Acceleration
-    Units::Length + Units::Time * -2; {
+    UnitMatrix::Length + UnitMatrix::Time * -2; {
         1.0 => MetersPerSecondSquared
     }
     // Density
-    Units::Mass + Units::Length * 3; {
+    UnitMatrix::Mass + UnitMatrix::Length * 3; {
         1.0 => KgPerM3
     }
     // Force Moment
-    Newton.matrix() + Units::Length; {
+    Newton.matrix() + UnitMatrix::Length; {
         1.0 => NetwonMeter
     }
 }
