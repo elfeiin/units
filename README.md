@@ -22,12 +22,12 @@ assert_eq![speed.to_unit(Mph), Some(69.0)];
 ```
 ### Inversion
 ```rs
-use units::{units::{Hertz, Second}, Measurement, Units};
+use units::{units::{Hertz, Second}, Measurement, UnitMatrix};
 
 let freq = Hertz::new(60.0);
 
 // Number of cycles / freq
-let time = Measurement::from_unit(Units::Scalar, 60.0) / freq;
+let time = Measurement::from_unit(UnitMatrix::Scalar, 60.0) / freq;
 
 assert_eq![time.to_unit(Second), Some(1.0)];
 ```
