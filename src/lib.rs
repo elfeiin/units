@@ -3,7 +3,7 @@ pub mod units;
 
 use std::ops::{Add, Div, Mul, Sub};
 
-#[derive(Eq, PartialEq, Copy, Clone, Default)]
+#[derive(Eq, PartialEq, Copy, Clone, Default, Debug)]
 pub struct UnitMatrix {
     pub length: i8,
     pub time: i8,
@@ -195,7 +195,7 @@ pub trait Unit {
     }
 }
 
-#[derive(PartialEq, Clone, Copy)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Measurement {
     matrix: UnitMatrix,
     value: f64,
